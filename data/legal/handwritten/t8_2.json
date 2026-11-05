@@ -1,0 +1,230 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_1",
+        "key": "orders_text",
+        "new_col": "order_limits",
+        "instr": "In 30-50 words extract conditions, duration, affected decision, and scope of the operative order. Use only this order, without importing reasons or identities from its semantic match. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 128,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_2",
+        "key": "reasons_text",
+        "new_col": "remedy_reasoning",
+        "instr": "In 110-170 words explain the accepted error, governing test, relevant facts, and expressly resulting remedy, with two supporting phrases. Extract from these reasons alone; do not attribute the joined order or its parties to this proceeding. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 384,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_5",
+        "key": "orders_text",
+        "new_col": "order_contract",
+        "instr": "In 50-80 words state the operative remedy, procedural stage, affected decision or obligation, beneficiary if stated, and conditions. Keep grants distinct from refusals, and temporary suspension distinct from final reversal. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 192,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_6",
+        "key": "orders_text",
+        "new_col": "changes_prior_decision",
+        "instr": "Return exactly YES if the present order varies, sets aside, quashes, or remits an identified earlier decision; otherwise NO. A stay or unsuccessful challenge does not qualify. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 4,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_7",
+        "key": "orders_text",
+        "new_col": "has_conditional_relief",
+        "instr": "Return exactly YES if an operative order has an express condition, compliance deadline, or limited duration; otherwise NO. A hearing date alone is not a condition on relief. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 4,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_4",
+        "key": "orders_text",
+        "new_col": "order_family",
+        "instr": "Return exactly one label for the principal relief addressed: SET_ASIDE_OR_REMIT, VARY, STAY_OR_INJUNCTION, DISMISS_OR_REFUSE, PAYMENT_OR_COSTS, PROCEDURAL_DIRECTION, or OTHER. Prefer the main disposition over ancillary costs; use OTHER when the relief is unstated. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 32,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_9",
+        "key": "reasons_text",
+        "new_col": "reasoned_remedy_contract",
+        "instr": "In 60-100 words state the challenged decision, error actually accepted, consequent remedy, procedural stage, and material constraints. Preserve the express causal link between error and remedy. Do not substitute the relief requested for relief actually granted. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 224,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 10
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_10",
+        "key": "reasons_text",
+        "new_col": "reasoned_relief_family",
+        "instr": "Return exactly one label for the principal relief addressed: SET_ASIDE_OR_REMIT, VARY, STAY_OR_INJUNCTION, DISMISS_OR_REFUSE, PAYMENT_OR_COSTS, PROCEDURAL_DIRECTION, or OTHER. Prefer the main disposition over ancillary costs; use OTHER when the relief is unstated. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 32,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 11
+      },
+      "enabled": true
+    },
+    "11": {
+      "oid": 11,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_filter_11",
+        "key": "reasons_text",
+        "predicate": "The deciding court or tribunal identifies an error in the challenged decision and expressly connects that error to setting aside, varying, quashing, or remitting that decision. An alleged error, an unsuccessful challenge, or a statement of available powers alone is insufficient. Use only the supplied text. Missing evidence means False. Distinguish the present decision from submissions, quotations, and prior decisions; do not infer the result from a case name.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_join_3",
+        "left_on": "orders_text",
+        "right_on": "reasons_text",
+        "condition": "Return True only if both records describe the same functional corrective remedy at a compatible procedural stage and affecting the same kind of decision or obligation. An order remitting an administrative decision may match reasoning granting that form of review, but a stay, dismissal, or costs payment alone cannot substitute for setting aside and remittal. This is retrieval of remedial analogues, not proof of case identity, legal applicability, or binding precedent. Require explicit compatible relief and procedural context; missing evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 8,
+        "right": 12
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_scan_8",
+        "table_dir": "data/legal/orders.csv",
+        "table_name": "orders"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "12": {
+      "oid": 12,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_scan_12",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

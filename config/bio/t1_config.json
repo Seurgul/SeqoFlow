@@ -1,0 +1,83 @@
+[
+    {
+        "oid": 10,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "title_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t1_sem_filter_10"
+        }
+    },
+    {
+        "oid": 2,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "affiliation_type",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t1_sem_filter_2"
+        }
+    },
+    {
+        "oid": 1,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "affiliations_1",
+            "new_col": "affiliation_type",
+            "instr": "Categorize it into one of the following : 'University', 'Hospital', 'Research Institute', 'Company', 'Other'.",
+            "in": 128,
+            "out": 16,
+            "op_name": "t1_sem_proj_1"
+        }
+    },
+    {
+        "oid": 3,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "no_pregnant",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t1_sem_filter_3"
+        }
+    },
+    {
+        "oid": 4,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "chemical_list_1",
+            "new_col": "no_pregnant",
+            "instr": "Name the contraindicated chemicals in this list for pregnant women. If there are none, return 'None'.",
+            "in": 128,
+            "out": 16,
+            "op_name": "t1_sem_proj_4"
+        }
+    },
+    {
+        "oid": 5,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "fulltext_processed_1",
+            "new_col": "dose_effect",
+            "instr": "Summarize the effect of the drug mentioned in the text. If there is no mention of drug effect, return 'None'.",
+            "in": 128,
+            "out": 16,
+            "op_name": "t1_sem_proj_5"
+        }
+    },
+    {
+        "oid": 6,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                0,
+                160
+            ],
+            "op_name": "t1_scan_6"
+        }
+    }
+]

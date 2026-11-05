@@ -1,0 +1,103 @@
+[
+  {
+    "oid": 2,
+    "op_type": "join",
+    "op_args": {
+      "op_name": "t6_join_2",
+      "left_on": "reasons_doc_id",
+      "right_on": "orders_doc_id",
+      "left_sel": 0.35,
+      "right_sel": 0.5
+    }
+  },
+  {
+    "oid": 1,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t6_sem_proj_1",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 32,
+      "new_col": "reasoning_kind"
+    }
+  },
+  {
+    "oid": 10,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t6_sem_proj_10",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 416,
+      "new_col": "reasoning_evidence"
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t6_scan_3",
+      "table_name": "reasons",
+      "rows": [
+        0,
+        500
+      ]
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t6_sem_filter_4",
+      "key": "review_relief_record",
+      "in": 480,
+      "out": 2,
+      "sel": 0.2
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t6_sem_proj_6",
+      "key": "orders_text",
+      "in": 518,
+      "out": 160,
+      "new_col": "review_relief_record"
+    }
+  },
+  {
+    "oid": 7,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t6_sem_proj_7",
+      "key": "orders_text",
+      "in": 518,
+      "out": 320,
+      "new_col": "disposition_audit"
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t6_sem_filter_5",
+      "key": "reasoning_kind",
+      "in": 518,
+      "out": 2,
+      "sel": 0.75
+    }
+  },
+  {
+    "oid": 8,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t6_scan_8",
+      "table_name": "orders",
+      "rows": [
+        0,
+        100
+      ]
+    }
+  }
+]

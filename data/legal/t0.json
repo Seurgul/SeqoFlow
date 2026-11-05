@@ -1,0 +1,161 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_aggr",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_aggr_1",
+        "group_by": "power_family",
+        "aggr_col": "power_record",
+        "out_col": "regulatory_power_comparison",
+        "instr": "In 150-220 words compare the actors, decision criteria, safeguards, and consequences in this group. Separate mandatory duties from discretionary powers. Do not merge different instruments into one rule or treat proposed wording as enacted law.",
+        "llm_args": {
+          "max_tokens": 448,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_group",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_group_2",
+        "group_by": "power_record",
+        "out_col": "power_family",
+        "instr": "Classify the principal power using exactly one label: LICENSING, ENFORCEMENT, FINANCIAL_ENTITLEMENT, INFORMATION_GATHERING, REVIEW, ADMINISTRATION, or OTHER. Classify the action, not just the subject matter. UNKNOWN evidence belongs in OTHER.",
+        "llm_args": {
+          "max_tokens": 24,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_join_3",
+        "left_on": "provisions_id",
+        "right_on": "provisions_provisions_id"
+      },
+      "refs": {
+        "left": 4,
+        "right": 5
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_filter_4",
+        "key": "provisions_id",
+        "predicate": "provisions_id.notna()"
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_filter_5",
+        "key": "provisions_text",
+        "predicate": "The excerpt expressly authorises or requires an identified public body or official to make a decision affecting a person, activity, licence, payment, or entitlement, and states a condition or criterion for that decision. Mere commencement, renaming, or unexplained amendment instructions do not qualify. Use only the supplied text. Missing evidence means False. Distinguish the present decision from submissions, quotations, and prior decisions; do not infer the result from a case name.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_proj_6",
+        "key": "source_type",
+        "new_col": "instrument_category",
+        "instr": "Identify the supplied document category in at most 12 words. Preserve the distinction between a bill and legislation; do not infer enactment. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 32,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_scan_7",
+        "table_dir": "data/legal/main.csv",
+        "table_name": "main"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_proj_8",
+        "key": "provisions_text",
+        "new_col": "power_record",
+        "instr": "In 100-150 words extract the empowered actor, regulated activity, trigger or precondition, permitted or required action, safeguard, and express consequence of noncompliance. Quote two short supporting phrases. Distinguish powers from duties and proposed amendments from operative wording. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 320,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_scan_9",
+        "table_dir": "data/legal/provisions.csv",
+        "table_name": "provisions"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

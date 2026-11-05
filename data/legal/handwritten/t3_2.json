@@ -1,0 +1,145 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sort",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sort_1",
+        "order_by": "relief_family",
+        "desc": false
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_aggr",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_aggr_2",
+        "group_by": "relief_family",
+        "aggr_col": "metadata_text",
+        "out_col": "info",
+        "instr": "Summarize the text in the group, focusing on the legal and procedural issues that were contested and how they relate to the relief sought. Use only the supplied text. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 128,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_filter_4",
+        "key": "metadata_text",
+        "predicate": "The headnote or introductory text identifies a contested question about jurisdiction, procedural fairness, admissibility, time limits, leave, or the availability of review. A field merely labelled Jurisdiction or a routine hearing listing is insufficient. Use only the supplied text. Missing evidence means False. Distinguish the present decision from submissions, quotations, and prior decisions; do not infer the result from a case name.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_proj_5",
+        "key": "reasons_text",
+        "new_col": "relief_family",
+        "instr": "Return exactly one label for the principal relief addressed: SET_ASIDE_OR_REMIT, VARY, STAY_OR_INJUNCTION, DISMISS_OR_REFUSE, PAYMENT_OR_COSTS, PROCEDURAL_DIRECTION, or OTHER. Prefer the main disposition over ancillary costs; use OTHER when the relief is unstated. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 32,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_filter_6",
+        "key": "reasons_text",
+        "predicate": "The text identifies a disputed legal or procedural question and explains why it matters to the relief sought. A list of citations or an unexplained assertion that the decision was wrong is insufficient. Use only the supplied text. Missing evidence means False. Distinguish the present decision from submissions, quotations, and prior decisions; do not infer the result from a case name.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_join_3",
+        "left_on": "metadata_text",
+        "right_on": "reasons_text",
+        "condition": "Document 1 and Document 2 both mentioned companies-related subjects.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 8,
+        "right": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_scan_7",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_scan_8",
+        "table_dir": "data/legal/metadata.csv",
+        "table_name": "metadata"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

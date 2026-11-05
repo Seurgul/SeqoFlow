@@ -1,0 +1,169 @@
+{
+  "nodes": {
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_filter_4",
+        "key": "correction_record",
+        "predicate": "The excerpt specifies all three: an observed or predicted quantity; comparison with a reference, target, or loss objective; and adjustment of a physical control parameter or learned model parameter to reduce the discrepancy. Diagnosis, notification, display, or resource routing without a corrective parameter adjustment is insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_6",
+        "key": "summary_content",
+        "new_col": "correction_record",
+        "instr": "In 80-120 words extract the observable, comparison reference, corrected parameter, and correction objective. Distinguish corrective adjustment from diagnosis, routing, and notification. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 224,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_filter_5",
+        "key": "summary_content",
+        "predicate": "An observed signal, extracted feature, measured quantity, or computed resource requirement is explicitly used to determine a diagnostic result, select processing, or change an operating action. Exclude fixed processing sequences without such a decision, permission/token checks, and selection based only on a user's command. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_1",
+        "key": "desc_content",
+        "new_col": "evidence_kind",
+        "instr": "Choose the strongest support actually present: MEASURED_COMPARISON, WORKED_EXAMPLE, PROPOSED_EMBODIMENT, or UNKNOWN. A numeric design parameter alone is not a measured result. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 10
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_10",
+        "key": "desc_content",
+        "new_col": "implementation_evidence",
+        "instr": "In 120-180 words reconstruct the disclosed implementation: interacting components, causal sequence, operating conditions, and evidence for the intended effect. Distinguish a proposed embodiment, a worked example, and an actual measured comparison. Include two supporting phrases. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 320,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_join_2",
+        "left_on": "desc_content",
+        "right_on": "implementation_audit",
+        "condition": "Document 1 and 2 are from the same field, e.g., they both describe medical devices, electronic devices, etc.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 3,
+        "right": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_7",
+        "key": "summary_content",
+        "new_col": "implementation_audit",
+        "instr": "Write an engineering evidence record in one sentence: what was observed, what was compared, what was adjusted, and what was the effect. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 32,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_scan_3",
+        "table_dir": "data/patent/description.csv",
+        "table_name": "description"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_scan_8",
+        "table_dir": "data/patent/summary.csv",
+        "table_name": "summary"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

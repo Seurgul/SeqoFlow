@@ -1,0 +1,139 @@
+[
+  {
+    "oid": 3,
+    "op_type": "sem_join",
+    "op_args": {
+      "op_name": "t8_sem_join_3",
+      "left_on": "orders_text",
+      "right_on": "reasons_text",
+      "left_sel": 0.35,
+      "right_sel": 0.5,
+      "left_in": 518,
+      "right_in": 2000,
+      "out": 2
+    }
+  },
+  {
+    "oid": 1,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_1",
+      "key": "orders_text",
+      "in": 518,
+      "out": 128,
+      "new_col": "order_limits"
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_4",
+      "key": "orders_text",
+      "in": 518,
+      "out": 32,
+      "new_col": "order_family"
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_5",
+      "key": "orders_text",
+      "in": 518,
+      "out": 192,
+      "new_col": "order_contract"
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_6",
+      "key": "orders_text",
+      "in": 518,
+      "out": 4,
+      "new_col": "changes_prior_decision"
+    }
+  },
+  {
+    "oid": 7,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_7",
+      "key": "orders_text",
+      "in": 518,
+      "out": 4,
+      "new_col": "has_conditional_relief"
+    }
+  },
+  {
+    "oid": 8,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t8_scan_8",
+      "table_name": "orders",
+      "rows": [
+        0,
+        20
+      ]
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_2",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 384,
+      "new_col": "remedy_reasoning"
+    }
+  },
+  {
+    "oid": 9,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_9",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 224,
+      "new_col": "reasoned_remedy_contract"
+    }
+  },
+  {
+    "oid": 10,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t8_sem_proj_10",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 32,
+      "new_col": "reasoned_relief_family"
+    }
+  },
+  {
+    "oid": 11,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t8_sem_filter_11",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.25
+    }
+  },
+  {
+    "oid": 12,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t8_scan_12",
+      "table_name": "reasons",
+      "rows": [
+        0,
+        500
+      ]
+    }
+  }
+]

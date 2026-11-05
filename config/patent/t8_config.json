@@ -1,0 +1,26 @@
+[
+  {
+    "oid": 8,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t8_scan_8",
+      "table_name": "definition",
+      "rows": [
+        0,
+        500
+      ]
+    }
+  },
+  {
+    "oid": 12,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t8_scan_12",
+      "table_name": "summary",
+      "rows": [
+        50,
+        100
+      ]
+    }
+  }
+]

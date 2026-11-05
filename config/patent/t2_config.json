@@ -1,0 +1,14 @@
+[
+  {
+    "oid": 5,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t2_scan_5",
+      "table_name": "patent_wide",
+      "rows": [
+        0,
+        4000
+      ]
+    }
+  }
+]

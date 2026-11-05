@@ -1,0 +1,134 @@
+{
+  "nodes": {
+    "10": {
+      "oid": 10,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_filter_10",
+        "key": "reasons_text",
+        "predicate": "The deciding court or tribunal gives at least one case-specific reason for accepting, rejecting, or leaving unresolved a disputed issue: it evaluates evidence, applies a legal test to the parties' circumstances, or explains the practical effect of a procedural choice. A reason about an interlocutory issue counts. The challenge need not succeed, no error need be found, and the final disposition need not appear. Pure background, an unassessed party allegation, or a rule or precedent quoted without application to this proceeding does not qualify. Use only the supplied excerpt; distinguish present reasoning from submissions and prior decisions. Missing evidence of case-specific reasoning means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_filter_2",
+        "key": "remedy_audit",
+        "predicate": "The remedy_audit identifies concrete relief sought, granted, refused or still pending in this proceeding that would affect a party's rights, liabilities, legal status, possession, payment obligation, or ability to pursue or defend a claim. Examples include damages, repayment, an injunction, a declaration, setting aside or affirming a decision under challenge, remittal, a new hearing, a stay, dismissal, leave to proceed, or an evidence or disclosure order. A stated request is sufficient even when the outcome is UNKNOWN; an accepted error or successful challenge is not required. Return False if the only relief identified is routine costs, interest on costs, timetabling or an adjournment, or if the record lists only hypothetical powers or remedies from unrelated precedent. Use only the supplied record and preserve attribution to the present proceeding.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_proj_1",
+        "key": "reasons_text",
+        "new_col": "remedy_audit",
+        "instr": "Prepare a remedy audit of the present proceeding using these labels: REQUESTS; GROUNDS; RESPONSE; PRACTICAL EFFECT; SUPPORT. Identify the concrete relief sought or decided, link each distinct request to its stated ground, and distinguish a party's request from the deciding body's response. Include granted, refused, alternative and unresolved requests; do not assume that an error was accepted. State the practical consequence only when supported. Include one short supporting phrase per distinct relief path, at most three. For one relief path use about 45-80 words; for two or more distinct paths use about 100-170 words. If no concrete request or disposition is given, use at most 35 words and mark missing fields UNKNOWN. Do not pad to a target length or repeat the same request under different labels. Use only the supplied excerpt; it may end before the disposition. Separate present requests and findings from procedural history and quoted precedent. Do not infer omitted facts or current legal validity. Your answer should be less than 100 words.",
+        "llm_args": {
+          "max_tokens": 384,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_filter_3",
+        "key": "challenge_record",
+        "predicate": "The challenge_record identifies no concrete disputed issue concerning facts or evidence (such as credibility, proof, causation, evidentiary weight or admissibility) or procedure (such as notice, hearing opportunity, disclosure, delay, jurisdiction to hear the application, or how the proceeding should be conducted). An identified party ground or request counts even if rejected or not yet resolved. Appeals, administrative review, original proceedings and interlocutory applications all qualify. A dispute solely about the abstract meaning of a legal provision, a bare assertion that a decision is wrong, or an issue mentioned only in unrelated precedent does not qualify. Use only the supplied record. UNKNOWN fields alone are not evidence; do not require the challenger to win.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_proj_4",
+        "key": "reasons_text",
+        "new_col": "challenge_record",
+        "instr": "Create a compact challenge record with labels CONTEXT; DISPUTED ISSUES; BASIS. Identify the present appeal, review, original claim or interlocutory application and the decision or request at issue. Preserve each distinct disputed fact, evidentiary issue or procedural objection, including a party's stated ground even if rejected or unresolved; separately identify issues solely about statutory or contractual interpretation. Attribute each issue to a party or the deciding body. For one issue use about 30-55 words; for several distinct issues use about 65-100 words, with at most three issues. If no disputed issue is stated, say so in at most 25 words. Use only the supplied excerpt; mark unstated facts UNKNOWN. Do not infer an objection from a case name, require an appeal or a successful challenge, or turn quoted precedent into an issue in this proceeding.",
+        "llm_args": {
+          "max_tokens": 224,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_proj_5",
+        "key": "reasons_text",
+        "new_col": "proceeding_scope",
+        "instr": "In at most 25 words identify the deciding body, the proceeding type (appeal, administrative review, original claim or interlocutory application), and its subject matter. Use only the supplied excerpt; mark unstated fields UNKNOWN. Do not infer the outcome.",
+        "llm_args": {
+          "max_tokens": 64,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_scan_6",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

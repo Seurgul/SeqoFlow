@@ -1,0 +1,140 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sort",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sort_1",
+        "order_by": "mechanism_family",
+        "desc": false
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_aggr",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_aggr_2",
+        "group_by": "mechanism_family",
+        "aggr_col": "summary_content",
+        "out_col": "constraint_strategies",
+        "instr": "Compare the disclosed mechanisms and their explicitly stated operating constraints in 150-220 words. Describe what is adjusted, what is preserved, and what remains unverified. Do not infer constraints from unavailable background text.",
+        "llm_args": {
+          "max_tokens": 384,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_join_3",
+        "left_on": "background_doc_id",
+        "right_on": "summary_doc_id"
+      },
+      "refs": {
+        "left": 4,
+        "right": 5
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_filter_4",
+        "key": "background_content",
+        "predicate": "The excerpt explains a conflict between two technical objectives or constraints: improving one creates a cost or obstacle for the other. Identify an explicit causal conflict, such as compute capacity versus data exposure, temporal detail versus compute budget, or effective drug exposure versus peak-induced side effects. Two unrelated benefits do not qualify. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_proj_5",
+        "key": "summary_content",
+        "new_col": "mechanism_family",
+        "instr": "Classify the primary intervention mechanism using exactly one label: FEEDBACK_CONTROL, SIGNAL_INTERPRETATION, RESOURCE_ALLOCATION, STRUCTURAL_CONFIGURATION, MATERIAL_COMPOSITION, PROCESS_SEQUENCE, or OTHER. Prefer FEEDBACK_CONTROL only when observation drives corrective actuation; prefer SIGNAL_INTERPRETATION for diagnosis without correction. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_sem_filter_6",
+        "key": "summary_content",
+        "predicate": "The excerpt specifies an operational dependency: an intermediate result is used by a later processing stage, or a stated condition determines an operation or state transition. A static list of components, spatial relationships, or desired benefits alone does not qualify. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_scan_7",
+        "table_dir": "data/patent/summary.csv",
+        "table_name": "summary"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t3_scan_8",
+        "table_dir": "data/patent/background.csv",
+        "table_name": "background"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "country_1",
+        "predicate": "This country is a developing country.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t2_sem_filter_1"
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "title_1",
+        "predicate": "This title is hard to understand for a layman.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t2_sem_filter_2"
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "abstract_1",
+        "predicate": "abstract_1.str.contains('female')",
+        "op_name": "t2_filter_3"
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "chemical_list_1",
+        "predicate": "The drugs are targeting the cardiovascular system.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t2_sem_filter_4"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t2_scan_5"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

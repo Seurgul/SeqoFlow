@@ -1,0 +1,145 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sort",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "order_by": "pmid_1",
+        "desc": true,
+        "op_name": "t3_sort_1"
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_aggr",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "group_by": "dept_3",
+        "aggr_col": "title_3",
+        "out_col": "topic",
+        "instr": "Summarize the group of input to a topic. Use 2-3 words.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        },
+        "op_name": "t3_sem_aggr_2"
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_1",
+        "predicate": "This paper is reporting a clinical case with one or more patients.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t3_sem_filter_4"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "abstract_3",
+        "new_col": "dept_3",
+        "instr": "Decide the medical department that is most relevant to the content of the abstract. Possible outputs include cardiology, oncology, neurology, gastroenterology, etc.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        },
+        "op_name": "t3_sem_proj_5"
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "country_3",
+        "predicate": "This country is mostly in tropical region.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t3_sem_filter_6"
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "left_on": "abstract_1",
+        "right_on": "abstract_3",
+        "op_name": "t3_sem_join_3",
+        "condition": "Compare the two abstracts and determine if the first one is more rigorous than the second one. Return True if it is, False otherwise.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 8,
+        "right": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_3.csv",
+        "table_name": "bio_3",
+        "op_name": "t3_scan_7"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t3_scan_8"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

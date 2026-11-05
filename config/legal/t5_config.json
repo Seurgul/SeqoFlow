@@ -1,0 +1,72 @@
+[
+  {
+    "oid": 6,
+    "op_type": "sem_sort",
+    "op_args": {
+      "op_name": "t5_sem_sort_6",
+      "order_by": "reasons_first",
+      "desc": true,
+      "instr": "Select the excerpt that more clearly explains how an identified statutory test applies to the facts of a challenge: explicit test and fact-to-test reasoning first, explained disposition second, treatment of competing submissions third. Rank evidence actually present in the headnote or introductory text, not case importance, length, number of citations, or whether the challenger won. Do not infer reasons or conclusions omitted from the excerpt.",
+      "llm_args": {
+        "max_tokens": 8,
+        "temperature": 0.0
+      }
+    }
+  },
+  {
+    "oid": 1,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t5_sem_filter_1",
+      "key": "reasons_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.45
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t5_sem_filter_2",
+      "key": "reasons_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.6
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t5_sem_filter_3",
+      "key": "reasons_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.5
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t5_sem_filter_4",
+      "key": "reasons_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.65
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t5_scan_5",
+      "table_name": "reasons",
+      "rows": [
+        0,
+        1000
+      ]
+    }
+  }
+]

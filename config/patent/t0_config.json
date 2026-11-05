@@ -1,0 +1,26 @@
+[
+  {
+    "oid": 7,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t0_scan_7",
+      "table_name": "pat",
+      "rows": [
+        0,
+        1000
+      ]
+    }
+  },
+  {
+    "oid": 9,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t0_scan_9",
+      "table_name": "summary",
+      "rows": [
+        0,
+        100
+      ]
+    }
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "oid": 1,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t2_sem_filter_1",
+      "key": "schedules_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.4
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t2_sem_filter_2",
+      "key": "schedules_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.55
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t2_sem_filter_4",
+      "key": "schedules_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.2
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "filter",
+    "op_args": {
+      "op_name": "t2_filter_3",
+      "key": "schedules_text",
+      "val": "Schedule",
+      "sel": 0.13880716769189622
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t2_scan_5",
+      "table_name": "schedules",
+      "rows": [
+        0,
+        1000
+      ]
+    }
+  }
+]

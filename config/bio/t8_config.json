@@ -1,0 +1,132 @@
+[
+    {
+        "oid": 1,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "keywords_1",
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_proj_1"
+        }
+    },
+    {
+        "oid": 2,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "fulltext_processed_2",
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_proj_2"
+        }
+    },
+    {
+        "oid": 3,
+        "op_type": "sem_join",
+        "op_args": {
+            "left_on": "affilations_1",
+            "right_on": "affilations_2",
+            "left_sel": 0.1,
+            "right_sel": 0.1,
+            "left_in": 128,
+            "right_in": 128,
+            "out": 2,
+            "op_name": "t8_sem_join_3"
+        }
+    },
+    {
+        "oid": 4,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "abstract_1",
+            "in": 128,
+            "out": 1024,
+            "op_name": "t8_sem_proj_4"
+        }
+    },
+    {
+        "oid": 5,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "abstract_2",
+            "in": 128,
+            "out": 1024,
+            "op_name": "t8_sem_proj_5"
+        }
+    },
+    {
+        "oid": 6,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "chemical_list_1",
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_proj_6"
+        }
+    },
+    {
+        "oid": 7,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "title_1",
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_proj_7"
+        }
+    },
+    {
+        "oid": 8,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                200,
+                260
+            ],
+            "op_name": "t8_scan_8"
+        }
+    },
+    {
+        "oid": 9,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "country_2",
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_proj_9"
+        }
+    },
+    {
+        "oid": 10,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "country_2",
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_proj_10"
+        }
+    },
+    {
+        "oid": 11,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "fulltext_processed_2",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t8_sem_filter_11"
+        }
+    },
+    {
+        "oid": 12,
+        "op_type": "scan",
+        "op_args": {
+            "table_dir": "data/bio/bio_2.csv",
+            "table_name": "bio_2",
+            "rows": [
+                200,
+                250
+            ],
+            "op_name": "t8_scan_12"
+        }
+    }
+]

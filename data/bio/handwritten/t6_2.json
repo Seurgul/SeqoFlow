@@ -1,0 +1,164 @@
+{
+  "nodes": {
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "dose_effect",
+        "predicate": "The dose_effect indicates its effectiveness.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t6_sem_filter_4"
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "new_col": "dose_effect",
+        "instr": "What is the effect of dose if the paper is controlling the dose of a medicaton? Generate a brief paragraph describing the dose-effect relationship. If the paper is not controlling the dose, return 'N/A'.",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t6_sem_proj_6"
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "new_col": "disease",
+        "instr": "What disease is the paper studying? Generate a brief paragraph describing the disease. If the disease is not mentioned, return 'N/A'.",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t6_sem_proj_7"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "predicate": "The content is related to cardiovascular diseases.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t6_sem_filter_5"
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "chemical_list_1",
+        "new_col": "not_affordable",
+        "instr": "The drugs prices are mostly not affordable for most patients.",
+        "op_name": "t6_sem_proj_1",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 10
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_1",
+        "new_col": "dose_effect",
+        "instr": "What is the effect of dose if the paper is controlling the dose of a medicaton? Generate a brief paragraph describing the dose-effect relationship. If the paper is not controlling the dose, return 'N/A'.",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t6_sem_proj_10"
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "left_on": "journal_1",
+        "right_on": "journal_2",
+        "op_name": "t6_join_2"
+      },
+      "refs": {
+        "left": 3,
+        "right": 8
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t6_scan_3"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_2.csv",
+        "table_name": "bio_2",
+        "op_name": "t6_scan_8"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

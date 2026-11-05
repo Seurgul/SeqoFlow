@@ -1,0 +1,89 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_sem_filter_1",
+        "key": "schedules_text",
+        "predicate": "The text is about government acts, regulations, or legislation.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_sem_filter_2",
+        "key": "schedules_text",
+        "predicate": "The text contains a specific date, month and year.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_filter_3",
+        "key": "schedules_text",
+        "predicate": "schedules_text.str.contains('Schedule', regex=True, na=False, case=False)"
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_sem_filter_4",
+        "key": "schedules_text",
+        "predicate": "The text asks for a specific deadline or time limit for a particular action.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_scan_5",
+        "table_dir": "data/legal/schedules.csv",
+        "table_name": "schedules"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

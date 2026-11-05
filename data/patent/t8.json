@@ -1,0 +1,230 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_1",
+        "key": "def_content",
+        "new_col": "substitution_requirements",
+        "instr": "In 30-50 words list the input/output interfaces and operating assumptions that any substitute for this mechanism must preserve. This is a one-document requirement extraction, not a comparison with the joined document. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 96,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_2",
+        "key": "summary_content",
+        "new_col": "implementation_detail",
+        "instr": "Write an engineering evidence record of 100-160 words: input or observable; intermediate representation; decision rule; resulting action; intended benefit; prerequisite or limitation. Include two short supporting phrases. Distinguish asserted benefits from measured results. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 256,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_join_3",
+        "left_on": "mechanism_contract",
+        "right_on": "corrective_contract",
+        "condition": "The two mechanisms can serve the same engineering function: they operate on compatible entities and quantities, accept compatible inputs, and produce interchangeable actions or outputs. Merely sharing a feedback pattern across unrelated domains does not qualify. Do not infer unstated interfaces. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 4,
+        "right": 9
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_4",
+        "key": "def_content",
+        "new_col": "definition_family",
+        "instr": "Classify the primary intervention mechanism using exactly one label: FEEDBACK_CONTROL, SIGNAL_INTERPRETATION, RESOURCE_ALLOCATION, STRUCTURAL_CONFIGURATION, MATERIAL_COMPOSITION, PROCESS_SEQUENCE, or OTHER. Prefer FEEDBACK_CONTROL only when observation drives corrective actuation; prefer SIGNAL_INTERPRETATION for diagnosis without correction. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_5",
+        "key": "def_content",
+        "new_col": "mechanism_contract",
+        "instr": "Describe input -> decision or transformation -> output, the entity acted on, and its operating setting in 50-80 words. Preserve specific physical quantities and required interfaces. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 160,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_6",
+        "key": "def_content",
+        "new_col": "corrective_operation",
+        "instr": "The excerpt specifies all three: an observed or predicted quantity; comparison with a reference, target, or loss objective; and adjustment of a physical control parameter or learned model parameter to reduce the discrepancy. Diagnosis, notification, display, or resource routing without a corrective parameter adjustment is insufficient. Return YES or NO. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 4,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_7",
+        "key": "def_content",
+        "new_col": "staged_operation",
+        "instr": "Return YES if the excerpt states an intermediate-result dependency or condition-driven operation; otherwise NO. Static component relationships do not suffice. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 4,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_scan_8",
+        "table_dir": "data/patent/definition.csv",
+        "table_name": "definition"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_9",
+        "key": "summary_content",
+        "new_col": "corrective_contract",
+        "instr": "Describe the observable -> comparison reference -> corrective action chain and operating setting in 60-100 words. Preserve physical quantities and the controlled entity. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 192,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 10
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_proj_10",
+        "key": "summary_content",
+        "new_col": "summary_family",
+        "instr": "Classify the primary intervention mechanism using exactly one label: FEEDBACK_CONTROL, SIGNAL_INTERPRETATION, RESOURCE_ALLOCATION, STRUCTURAL_CONFIGURATION, MATERIAL_COMPOSITION, PROCESS_SEQUENCE, or OTHER. Prefer FEEDBACK_CONTROL only when observation drives corrective actuation; prefer SIGNAL_INTERPRETATION for diagnosis without correction. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 11
+      },
+      "enabled": true
+    },
+    "11": {
+      "oid": 11,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_sem_filter_11",
+        "key": "summary_content",
+        "predicate": "The excerpt specifies all three: an observed or predicted quantity; comparison with a reference, target, or loss objective; and adjustment of a physical control parameter or learned model parameter to reduce the discrepancy. Diagnosis, notification, display, or resource routing without a corrective parameter adjustment is insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 12
+      },
+      "enabled": true
+    },
+    "12": {
+      "oid": 12,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t8_scan_12",
+        "table_dir": "data/patent/summary.csv",
+        "table_name": "summary"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_join_1",
+        "left_on": "reasons_text",
+        "right_on": "orders_text",
+        "condition": "Document 1 describes a dispute and the reason relief is sought or considered; Document 2 describes an order. Return True only if the order provides the specific type of relief at issue and its procedural setting and affected decision or obligation are compatible. Match functional remedial analogues, not case identity or binding authority. Shared words such as appeal or costs alone do not suffice. Refusal is not equivalent to a grant; an interim stay is not a final reversal. Missing procedural context or relief means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 2,
+        "right": 10
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_filter_2",
+        "key": "reasons_text",
+        "predicate": "The text discussed payment-related jurisdictions.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_proj_10",
+        "key": "orders_text",
+        "new_col": "order_record",
+        "instr": "In 80-130 words record the operative relief, affected actor or decision, duration, conditions, and costs disposition. Distinguish orders presently made from quoted earlier orders. This is extraction from the order alone, not an explanation of why it matches another case. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 288,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_filter_3",
+        "key": "orders_text",
+        "predicate": "The order involves a Civil dispute instead of a Criminal matter.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_scan_6",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_scan_7",
+        "table_dir": "data/legal/orders.csv",
+        "table_name": "orders"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

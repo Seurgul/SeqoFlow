@@ -1,0 +1,113 @@
+{
+  "nodes": {
+    "6": {
+      "oid": 6,
+      "op_type": "sem_sort",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "order_by": "country_1",
+        "desc": true,
+        "instr": "Rank the countries by geographical elevation.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t5_sem_sort_6"
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "authors_1",
+        "predicate": "One or more of the authors speak Mandarin.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t5_sem_filter_1"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_1",
+        "predicate": "This paper is studying the effects of certain medications.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t5_sem_filter_2"
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "abstract_1",
+        "predicate": "This is studying rare diseases.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t5_sem_filter_3"
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "country_1",
+        "predicate": "This country has a high infection rate.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t5_sem_filter_4"
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t5_scan_5"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

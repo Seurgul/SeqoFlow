@@ -1,0 +1,161 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_aggr",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_aggr_1",
+        "group_by": "mechanism_family",
+        "aggr_col": "mechanism_record",
+        "out_col": "design_comparison",
+        "instr": "Compare the observation-to-action chains in this group in 150-220 words. Identify shared mechanisms, differing prerequisites, and missing evidence. Do not treat asserted benefits as measured improvements.",
+        "llm_args": {
+          "max_tokens": 384,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_group",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_group_2",
+        "group_by": "mechanism_record",
+        "out_col": "mechanism_family",
+        "instr": "Classify the primary intervention mechanism using exactly one label: FEEDBACK_CONTROL, SIGNAL_INTERPRETATION, RESOURCE_ALLOCATION, STRUCTURAL_CONFIGURATION, MATERIAL_COMPOSITION, PROCESS_SEQUENCE, or OTHER. Prefer FEEDBACK_CONTROL only when observation drives corrective actuation; prefer SIGNAL_INTERPRETATION for diagnosis without correction.",
+        "llm_args": {
+          "max_tokens": 128,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_join_3",
+        "left_on": "summary_id_0",
+        "right_on": "summary_id"
+      },
+      "refs": {
+        "left": 4,
+        "right": 5
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_filter_4",
+        "key": "summary_id_0",
+        "predicate": "summary_id_0.notna()"
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_filter_5",
+        "key": "summary_content",
+        "predicate": "An observed signal, extracted feature, measured quantity, or computed resource requirement is explicitly used to determine a diagnostic result, select processing, or change an operating action. Exclude fixed processing sequences without such a decision, permission/token checks, and selection based only on a user's command. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_proj_6",
+        "key": "title",
+        "new_col": "artifact",
+        "instr": "Extract the engineered artifact and its stated operation in at most 500 words. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 512,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_scan_7",
+        "table_dir": "data/patent/pat.csv",
+        "table_name": "pat"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_sem_proj_8",
+        "key": "summary_content",
+        "new_col": "mechanism_record",
+        "instr": "Write an engineering evidence record of 100-160 words: input or observable; intermediate representation; decision rule; resulting action; intended benefit; prerequisite or limitation. Include two short supporting phrases. Distinguish asserted benefits from measured results. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 256,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t0_scan_9",
+        "table_dir": "data/patent/summary.csv",
+        "table_name": "summary"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

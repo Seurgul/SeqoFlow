@@ -1,0 +1,105 @@
+[
+  {
+    "oid": 1,
+    "op_type": "sem_join",
+    "op_args": {
+      "op_name": "t7_sem_join_1",
+      "left_on": "orders_text",
+      "right_on": "reasons_text",
+      "left_sel": 0.35,
+      "right_sel": 0.5,
+      "left_in": 518,
+      "right_in": 2000,
+      "out": 2
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t7_scan_2",
+      "table_name": "orders",
+      "rows": [
+        0,
+        200
+      ]
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t7_sem_filter_3",
+      "key": "relief_requirements",
+      "in": 1008,
+      "out": 2,
+      "sel": 0.65
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t7_sem_proj_4",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 336,
+      "new_col": "relief_requirements"
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "filter",
+    "op_args": {
+      "op_name": "t7_filter_6",
+      "key": "has_balancing",
+      "val": "YES",
+      "sel": 0.35
+    }
+  },
+  {
+    "oid": 7,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t7_sem_proj_7",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 4,
+      "new_col": "has_balancing"
+    }
+  },
+  {
+    "oid": 8,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t7_sem_filter_8",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.6
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t7_sem_filter_5",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.55
+    }
+  },
+  {
+    "oid": 9,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t7_scan_9",
+      "table_name": "reasons",
+      "rows": [
+        800,
+        1000
+      ]
+    }
+  }
+]

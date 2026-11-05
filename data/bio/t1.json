@@ -1,0 +1,134 @@
+{
+    "nodes": {
+        "10": {
+            "oid": 10,
+            "op_type": "sem_filter",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "title_1",
+                "predicate": "This is discussing infectious diseases.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t1_sem_filter_10"
+            },
+            "refs": {
+                "child": 2
+            },
+            "enabled": true
+        },
+        "2": {
+            "oid": 2,
+            "op_type": "sem_filter",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "affiliation_type",
+                "predicate": "This is a sign of commercial activity.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t1_sem_filter_2"
+            },
+            "refs": {
+                "child": 1
+            },
+            "enabled": true
+        },
+        "1": {
+            "oid": 1,
+            "op_type": "sem_proj",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "affiliations_1",
+                "new_col": "affiliation_type",
+                "instr": "Categorize it into one of the following : 'University', 'Hospital', 'Research Institute', 'Company', 'Other'.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t1_sem_proj_1"
+            },
+            "refs": {
+                "child": 3
+            },
+            "enabled": true
+        },
+        "3": {
+            "oid": 3,
+            "op_type": "sem_filter",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "no_pregnant",
+                "predicate": "This is a chemical commonly used in clinical treatment.",
+                "op_name": "t1_sem_filter_3",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                }
+            },
+            "refs": {
+                "child": 4
+            },
+            "enabled": true
+        },
+        "4": {
+            "oid": 4,
+            "op_type": "sem_proj",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "chemical_list_1",
+                "new_col": "no_pregnant",
+                "instr": "Name the contraindicated chemicals in this list for pregnant women. If there are none, return 'None'.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t1_sem_proj_4"
+            },
+            "refs": {
+                "child": 5
+            },
+            "enabled": true
+        },
+        "5": {
+            "oid": 5,
+            "op_type": "sem_proj",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "fulltext_processed_1",
+                "new_col": "dose_effect",
+                "instr": "Summarize the effect of the chemical on the disease in one word.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t1_sem_proj_5"
+            },
+            "refs": {
+                "child": 6
+            },
+            "enabled": true
+        },
+        "6": {
+            "oid": 6,
+            "op_type": "scan",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "table_dir": "data/bio/bio_1.csv",
+                "table_name": "bio_1",
+                "op_name": "t1_scan_6"
+            },
+            "refs": {},
+            "enabled": true
+        }
+    }
+}

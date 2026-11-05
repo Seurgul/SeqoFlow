@@ -1,0 +1,134 @@
+{
+  "nodes": {
+    "10": {
+      "oid": 10,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_filter_10",
+        "key": "background_content",
+        "predicate": "The excerpt identifies a concrete limitation of an existing approach and explains a causal reason or operating circumstance that produces it. Generic needs for better performance, a list of applications, or an unexplained statement that prior art is deficient are insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_filter_2",
+        "key": "correction_audit",
+        "predicate": "The excerpt specifies all three: an observed or predicted quantity; comparison with a reference, target, or loss objective; and adjustment of a physical control parameter or learned model parameter to reduce the discrepancy. Diagnosis, notification, display, or resource routing without a corrective parameter adjustment is insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_proj_1",
+        "key": "summary_content",
+        "new_col": "correction_audit",
+        "instr": "In 100-160 words identify the observable, comparator, adjusted parameter, and target of correction. Explain whether there is corrective actuation, diagnosis only, or no comparison; include supporting phrases. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 256,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_filter_3",
+        "key": "decision_chain",
+        "predicate": "An observed signal, extracted feature, measured quantity, or computed resource requirement is explicitly used to determine a diagnostic result, select processing, or change an operating action. Exclude fixed processing sequences without such a decision, permission/token checks, and selection based only on a user's command. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_proj_4",
+        "key": "def_content",
+        "new_col": "decision_chain",
+        "instr": "Extract observable -> decision rule -> resulting action in 30-60 words. Explicitly distinguish automatic decisions from user commands and static arrangements. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 128,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_sem_proj_5",
+        "key": "field_content",
+        "new_col": "intervention_scope",
+        "instr": "State the object acted on and the intervention level (material, component, device, process, or system) in at most 20 words. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 48,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t1_scan_6",
+        "table_dir": "data/patent/patent_wide.csv",
+        "table_name": "patent_wide"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

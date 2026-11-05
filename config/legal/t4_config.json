@@ -1,0 +1,73 @@
+[
+  {
+    "oid": 1,
+    "op_type": "sem_join",
+    "op_args": {
+      "op_name": "t4_sem_join_1",
+      "left_on": "reasons_text",
+      "right_on": "orders_text",
+      "left_sel": 0.35,
+      "right_sel": 0.5,
+      "left_in": 2000,
+      "right_in": 518,
+      "out": 2
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t4_sem_filter_2",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.2
+    }
+  },
+  {
+    "oid": 10,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t4_sem_proj_10",
+      "key": "orders_text",
+      "in": 518,
+      "out": 288,
+      "new_col": "order_record"
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t4_sem_filter_3",
+      "key": "orders_text",
+      "in": 518,
+      "out": 2,
+      "sel": 0.75
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t4_scan_6",
+      "table_name": "reasons",
+      "rows": [
+        800,
+        900
+      ]
+    }
+  },
+  {
+    "oid": 7,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t4_scan_7",
+      "table_name": "orders",
+      "rows": [
+        0,
+        200
+      ]
+    }
+  }
+]

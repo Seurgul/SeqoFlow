@@ -1,0 +1,163 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_join_1",
+        "left_on": "def_content",
+        "right_on": "innovation_summary",
+        "condition": "Document 1 describes a technical mechanism, and Document 2 describes a technical problem, limitation, or improvement goal. Return True if they do not belong to the same technical field, e.g., 1 is about household appliances and 2 is about computer systems. Use only the supplied documents; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 2,
+        "right": 3
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_scan_2",
+        "table_dir": "data/patent/definition.csv",
+        "table_name": "definition"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_filter_3",
+        "key": "innovation_summary",
+        "predicate": "The summary identifies a specific technology and a technical problem, limitation, or desired improvement. Use only the supplied summary; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_proj_4",
+        "key": "background_content",
+        "new_col": "innovation_summary",
+        "instr": "In 50-80 words summarize the existing technology and any technical problem, limitation, or desired improvement stated in the excerpt. If the excerpt does not state a proposed solution, say that no solution is stated. Do not invent one.",
+        "llm_args": {
+          "max_tokens": 256,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_filter_5",
+        "key": "background_content",
+        "predicate": "The excerpt states a technical problem, limitation, need, or desired improvement involving a system, device, method, process, material, or structure. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_filter_6",
+        "key": "technical_context",
+        "predicate": "technical_context.str.contains('CONTRIBUTION', regex=True, na=False, case=False)"
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_proj_7",
+        "key": "background_content",
+        "new_col": "technical_context",
+        "instr": "Describe the techinical contribution of the excerpt in 150 words or less. If the excerpt does not describe a technical contribution, say 'NO TECHNICAL CONTRIBUTION'.",
+        "llm_args": {
+          "max_tokens": 256,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_filter_8",
+        "key": "background_content",
+        "predicate": "The excerpt identifies a concrete limitation of an existing approach and explains a causal reason or operating circumstance that produces it. Generic needs for better performance, a list of applications, or an unexplained statement that prior art is deficient are insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_scan_9",
+        "table_dir": "data/patent/background.csv",
+        "table_name": "background"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

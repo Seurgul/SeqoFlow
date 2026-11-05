@@ -1,0 +1,28 @@
+[
+    {
+        "agent": {
+            "model_name": "<hf-model-0>",
+            "port": 8003,
+            "device": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "gpu_util": 0.2
+        }
+    },
+    {
+        "agent": {
+            "model_name": "<hf-model-1>",
+            "port": 8002,
+            "device": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "gpu_util": 0.6
+        }
+    }
+]

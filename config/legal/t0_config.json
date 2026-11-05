@@ -1,0 +1,109 @@
+[
+  {
+    "oid": 1,
+    "op_type": "sem_aggr",
+    "op_args": {
+      "op_name": "t0_sem_aggr_1",
+      "group_by": "power_family",
+      "aggr_col": "power_record",
+      "out_col": "regulatory_power_comparison",
+      "instr": "In 150-220 words compare the actors, decision criteria, safeguards, and consequences in this group. Separate mandatory duties from discretionary powers. Do not merge different instruments into one rule or treat proposed wording as enacted law.",
+      "llm_args": {
+        "max_tokens": 448,
+        "temperature": 0.0
+      }
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "sem_group",
+    "op_args": {
+      "op_name": "t0_sem_group_2",
+      "group_by": "power_record",
+      "out_col": "power_family",
+      "instr": "Classify the principal power using exactly one label: LICENSING, ENFORCEMENT, FINANCIAL_ENTITLEMENT, INFORMATION_GATHERING, REVIEW, ADMINISTRATION, or OTHER. Classify the action, not just the subject matter. UNKNOWN evidence belongs in OTHER.",
+      "llm_args": {
+        "max_tokens": 24,
+        "temperature": 0.0
+      }
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "join",
+    "op_args": {
+      "op_name": "t0_join_3",
+      "left_on": "provisions_id",
+      "right_on": "provisions_provisions_id",
+      "left_sel": 0.35,
+      "right_sel": 0.5
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t0_sem_proj_6",
+      "key": "source_type",
+      "in": 19,
+      "out": 32,
+      "new_col": "instrument_category"
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "filter",
+    "op_args": {
+      "op_name": "t0_filter_4",
+      "key": "provisions_id",
+      "val": "0",
+      "sel": 0.6235
+    }
+  },
+  {
+    "oid": 7,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t0_scan_7",
+      "table_name": "main",
+      "rows": [
+        0,
+        1000
+      ]
+    }
+  },
+  {
+    "oid": 8,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t0_sem_proj_8",
+      "key": "provisions_text",
+      "in": 5000,
+      "out": 320,
+      "new_col": "power_record"
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t0_sem_filter_5",
+      "key": "provisions_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.45
+    }
+  },
+  {
+    "oid": 9,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t0_scan_9",
+      "table_name": "provisions",
+      "rows": [
+        0,
+        100
+      ]
+    }
+  }
+]

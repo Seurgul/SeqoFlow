@@ -1,0 +1,94 @@
+[
+  {
+    "oid": 1,
+    "op_type": "sort",
+    "op_args": {
+      "op_name": "t3_sort_1",
+      "order_by": "relief_family",
+      "desc": false
+    }
+  },
+  {
+    "oid": 2,
+    "op_type": "sem_aggr",
+    "op_args": {
+      "op_name": "t3_sem_aggr_2",
+      "group_by": "relief_family",
+      "aggr_col": "reasons_text",
+      "out_col": "procedural_reasoning_comparison",
+      "instr": "In 150-220 words compare the procedural questions, applicable tests, relevant facts, and express conclusions in the supplied reasons. Distinguish submissions from findings and interlocutory relief from final disposition. If a truncated excerpt omits the conclusion, say so; do not infer it from the group label.",
+      "llm_args": {
+        "max_tokens": 448,
+        "temperature": 0.0
+      }
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "join",
+    "op_args": {
+      "op_name": "t3_join_3",
+      "left_on": "metadata_doc_id",
+      "right_on": "reasons_doc_id",
+      "left_sel": 0.35,
+      "right_sel": 0.5
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t3_sem_filter_4",
+      "key": "metadata_text",
+      "in": 357,
+      "out": 2,
+      "sel": 0.25
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t3_sem_proj_5",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 32,
+      "new_col": "relief_family"
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t3_sem_filter_6",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.6
+    }
+  },
+  {
+    "oid": 7,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t3_scan_7",
+      "table_name": "reasons",
+      "rows": [
+        0,
+        1190
+      ]
+    }
+  },
+  {
+    "oid": 8,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t3_scan_8",
+      "table_name": "metadata",
+      "rows": [
+        0,
+        100
+      ]
+    }
+  }
+]

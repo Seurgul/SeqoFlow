@@ -1,0 +1,103 @@
+[
+    {
+        "oid": 1,
+        "op_type": "sem_join",
+        "op_args": {
+            "left_on": "fulltext_processed_1",
+            "right_on": "keywords_2",
+            "left_sel": 0.1,
+            "right_sel": 0.1,
+            "left_in": 128,
+            "right_in": 128,
+            "out": 2,
+            "op_name": "t7_sem_join_1"
+        }
+    },
+    {
+        "oid": 2,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                200,
+                280
+            ],
+            "op_name": "t7_scan_2"
+        }
+    },
+    {
+        "oid": 3,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "desc",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t7_sem_filter_3"
+        }
+    },
+    {
+        "oid": 4,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "keywords_2",
+            "in": 128,
+            "out": 128,
+            "op_name": "t7_sem_proj_4"
+        }
+    },
+    {
+        "oid": 5,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "journal_2",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t7_sem_filter_5"
+        }
+    },
+    {
+        "oid": 6,
+        "op_type": "filter",
+        "op_args": {
+            "key": "is_asian",
+            "val": "Yes",
+            "sel": 0.1,
+            "op_name": "t7_filter_6"
+        }
+    },
+    {
+        "oid": 7,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "authors_2",
+            "in": 128,
+            "out": 2,
+            "op_name": "t7_sem_proj_7"
+        }
+    },
+    {
+        "oid": 8,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "fulltext_processed_2",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t7_sem_filter_8"
+        }
+    },
+    {
+        "oid": 9,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_2",
+            "rows": [
+                0,
+                200
+            ],
+            "op_name": "t7_scan_9"
+        }
+    }
+]

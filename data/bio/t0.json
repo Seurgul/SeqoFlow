@@ -1,0 +1,161 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_aggr",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "group_by": "topic_1",
+        "aggr_col": "title_1",
+        "out_col": "advance",
+        "instr": "Summarize the group of input into 2-3 sentences describing the recent advances in this topic.",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t0_sem_aggr_1"
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_group",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "group_by": "title_1",
+        "out_col": "topic_1",
+        "instr": "Group the papers into different general medical research topics based on the abstract. Each topic should be described in 2-3 words.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        },
+        "op_name": "t0_sem_group_2"
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "left_on": "kw_1",
+        "right_on": "kw_2",
+        "op_name": "t0_join_3"
+      },
+      "refs": {
+        "left": 4,
+        "right": 5
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "journal_1",
+        "predicate": "journal_1.str.contains('cancer')",
+        "op_name": "t0_filter_4"
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "predicate": "The content is related to cardiovascular diseases.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t0_sem_filter_5"
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "keywords_1",
+        "new_col": "kw_1",
+        "instr": "Extract the first keyword from the list of keywords.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        },
+        "op_name": "t0_sem_proj_6"
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t0_scan_7"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "keywords_2",
+        "new_col": "kw_2",
+        "instr": "Extract the first keyword from the list of keywords.",
+        "llm_args": {
+          "max_tokens": 16,
+          "temperature": 0.0
+        },
+        "op_name": "t0_sem_proj_8"
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_2.csv",
+        "table_name": "bio_2",
+        "op_name": "t0_scan_9"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

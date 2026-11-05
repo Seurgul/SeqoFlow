@@ -1,0 +1,26 @@
+[
+  {
+    "oid": 3,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t6_scan_3",
+      "table_name": "description",
+      "rows": [
+        0,
+        500
+      ]
+    }
+  },
+  {
+    "oid": 8,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t6_scan_8",
+      "table_name": "summary",
+      "rows": [
+        0,
+        50
+      ]
+    }
+  }
+]

@@ -1,0 +1,57 @@
+[
+    {
+        "oid": 1,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "country_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t2_sem_filter_1"
+        }
+    },
+    {
+        "oid": 2,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "title_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t2_sem_filter_2"
+        }
+    },
+    {
+        "oid": 3,
+        "op_type": "filter",
+        "op_args": {
+            "key": "abstract_1",
+            "val": "female",
+            "sel": 0.1,
+            "op_name": "t2_filter_3"
+        }
+    },
+    {
+        "oid": 4,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "chemical_list_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t2_sem_filter_4"
+        }
+    },
+    {
+        "oid": 5,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                0,
+                160
+            ],
+            "op_name": "t2_scan_5"
+        }
+    }
+]

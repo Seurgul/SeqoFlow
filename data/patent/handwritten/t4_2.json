@@ -1,0 +1,109 @@
+{
+  "nodes": {
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_proj_10",
+        "key": "def_content",
+        "new_col": "solution_chain",
+        "instr": "Write an engineering evidence record of 100-160 words: input or observable; intermediate representation; decision rule; resulting action; intended benefit; prerequisite or limitation. Include two short supporting phrases. Distinguish asserted benefits from measured results. Use only the supplied excerpt. Mark unstated fields UNKNOWN; do not invent performance results or claim scope.",
+        "llm_args": {
+          "max_tokens": 256,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_filter_2",
+        "key": "background_content",
+        "predicate": "The excerpt explains a conflict between two technical objectives or constraints: improving one creates a cost or obstacle for the other. Identify an explicit causal conflict, such as compute capacity versus data exposure, temporal detail versus compute budget, or effective drug exposure versus peak-induced side effects. Two unrelated benefits do not qualify. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_filter_3",
+        "key": "def_content",
+        "predicate": "An observed signal, extracted feature, measured quantity, or computed resource requirement is explicitly used to determine a diagnostic result, select processing, or change an operating action. Exclude fixed processing sequences without such a decision, permission/token checks, and selection based only on a user's command. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_sem_join_1",
+        "left_on": "background_content",
+        "right_on": "def_content",
+        "condition": "Document 1 describes a technical limitation; Document 2 describes a proposed mechanism. Return True only if the mechanism explicitly acts on the cause of that limitation and the required inputs, physical quantities, and operating setting are compatible. Shared topic, words such as controller or efficiency, or an analogy requiring an unstated component do not establish a match. Judge technical compatibility, not legal novelty or infringement. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 6,
+        "right": 7
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_scan_6",
+        "table_dir": "data/patent/background.csv",
+        "table_name": "background"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t4_scan_7",
+        "table_dir": "data/patent/definition.csv",
+        "table_name": "definition"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

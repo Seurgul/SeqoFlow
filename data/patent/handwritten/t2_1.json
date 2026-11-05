@@ -1,0 +1,89 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_sem_filter_1",
+        "key": "background_content",
+        "predicate": "The excerpt identifies a concrete limitation of an existing approach and explains a causal reason or operating circumstance that produces it. Generic needs for better performance, a list of applications, or an unexplained statement that prior art is deficient are insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_sem_filter_2",
+        "key": "def_content",
+        "predicate": "The excerpt specifies an operational dependency: an intermediate result is used by a later processing stage, or a stated condition determines an operation or state transition. A static list of components, spatial relationships, or desired benefits alone does not qualify. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_sem_filter_4",
+        "key": "summary_content",
+        "predicate": "The excerpt specifies all three: an observed or predicted quantity; comparison with a reference, target, or loss objective; and adjustment of a physical control parameter or learned model parameter to reduce the discrepancy. Diagnosis, notification, display, or resource routing without a corrective parameter adjustment is insufficient. Use only the supplied excerpt; missing or unstated evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_filter_3",
+        "key": "summary_id_0",
+        "predicate": "summary_id_0.notna()"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t2_scan_5",
+        "table_dir": "data/patent/patent_wide.csv",
+        "table_name": "patent_wide"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "nodes": {
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "keywords_1",
+        "new_col": "desc",
+        "instr": "Generate a brief description for each of the keywords.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_1"
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "new_col": "summary",
+        "instr": "Summarize the full text of a medical paper in one sentence.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_2"
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "left_on": "affiliations_1",
+        "right_on": "affiliations_2",
+        "condition": "The two entities are from the same country.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_join_3"
+      },
+      "refs": {
+        "left": 4,
+        "right": 9
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "abstract_1",
+        "new_col": "department",
+        "instr": "Which hospital department is this medical research likely from?",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_4"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "abstract_1",
+        "new_col": "disease",
+        "instr": "What disease is the paper studying? Generate a brief paragraph describing the disease. If the disease is not mentioned, return 'N/A'.",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_5"
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "chemical_list_1",
+        "new_col": "no_pregnant",
+        "instr": "List any of the chemicals mentioned in the paper are not safe for pregnant women. If ther are none, return 'No'.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_6"
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "title_1",
+        "new_col": "lethal",
+        "instr": "Determine if the disease is lethal based on the title of a medical paper. Return 'Yes' if it is lethal, 'No' otherwise.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_7"
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t8_scan_8"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "country_2",
+        "new_col": "income_level",
+        "instr": "What is the income level of the country mentioned in the paper? Return 'High', 'Upper-middle', 'Lower-middle', or 'Low'.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_9"
+      },
+      "refs": {
+        "child": 10
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "country_2",
+        "new_col": "continent",
+        "instr": "Which continent is the country mentioned in the paper from? Return 'Asia', 'Europe', 'North America', 'South America', 'Africa', or 'Oceania'.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_proj_10"
+      },
+      "refs": {
+        "child": 11
+      },
+      "enabled": true
+    },
+    "11": {
+      "oid": 11,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "predicate": "Is the paper studying the spread of a communicable disease?",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t8_sem_filter_11"
+      },
+      "refs": {
+        "child": 12
+      },
+      "enabled": true
+    },
+    "12": {
+      "oid": 12,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_2.csv",
+        "table_name": "bio_2",
+        "op_name": "t8_scan_12"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

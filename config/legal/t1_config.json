@@ -1,0 +1,80 @@
+[
+  {
+    "oid": 2,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t1_sem_filter_2",
+      "key": "remedy_audit",
+      "in": 1800,
+      "out": 2,
+      "sel": 0.7
+    }
+  },
+  {
+    "oid": 1,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t1_sem_proj_1",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 384,
+      "new_col": "remedy_audit"
+    }
+  },
+  {
+    "oid": 3,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t1_sem_filter_3",
+      "key": "challenge_record",
+      "in": 1000,
+      "out": 2,
+      "sel": 0.6
+    }
+  },
+  {
+    "oid": 4,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t1_sem_proj_4",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 224,
+      "new_col": "challenge_record"
+    }
+  },
+  {
+    "oid": 5,
+    "op_type": "sem_proj",
+    "op_args": {
+      "op_name": "t1_sem_proj_5",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 64,
+      "new_col": "proceeding_scope"
+    }
+  },
+  {
+    "oid": 10,
+    "op_type": "sem_filter",
+    "op_args": {
+      "op_name": "t1_sem_filter_10",
+      "key": "reasons_text",
+      "in": 5000,
+      "out": 2,
+      "sel": 0.65
+    }
+  },
+  {
+    "oid": 6,
+    "op_type": "scan",
+    "op_args": {
+      "op_name": "t1_scan_6",
+      "table_name": "reasons",
+      "rows": [
+        0,
+        1000
+      ]
+    }
+  }
+]

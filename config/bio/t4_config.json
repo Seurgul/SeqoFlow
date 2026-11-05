@@ -1,0 +1,73 @@
+[
+    {
+        "oid": 1,
+        "op_type": "sem_join",
+        "op_args": {
+            "left_on": "fulltext_processed_1",
+            "right_on": "keywords_2",
+            "left_sel": 0.1,
+            "right_sel": 0.1,
+            "left_in": 128,
+            "right_in": 128,
+            "out": 2,
+            "op_name": "t4_sem_join_1"
+        }
+    },
+    {
+        "oid": 2,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "fulltext_processed_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t4_sem_filter_2"
+        }
+    },
+    {
+        "oid": 3,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "fulltext_processed_2",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t4_sem_filter_3"
+        }
+    },
+    {
+        "oid": 6,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                0,
+                20
+            ],
+            "op_name": "t4_scan_6"
+        }
+    },
+    {
+        "oid": 7,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_2",
+            "rows": [
+                500,
+                600
+            ],
+            "op_name": "t4_scan_7"
+        }
+    },
+    {
+        "oid": 10,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "keywords_2",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t4_sem_proj_10"
+        }
+    }
+]

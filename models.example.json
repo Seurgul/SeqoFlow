@@ -1,0 +1,44 @@
+{
+    "slm": {
+        "model_name": "<slm-model>",
+        "url": "http://localhost:8003/v1/chat/completions",
+        "api_key": null,
+        "timeout": 120
+    },
+    "llm": {
+        "model_name": "<llm-deployment>",
+        "url": "https://<resource>.services.ai.azure.com/openai/v1/responses",
+        "api_key": "<azure-api-key>",
+        "timeout": 600
+    },
+    "slm-qwen2.5-1.5b": {
+        "model_name": "<slm-model>",
+        "url": "http://localhost:8003/v1/chat/completions",
+        "api_key": null,
+        "timeout": 600
+    },
+    "slm-qwen3-4b-8001": {
+        "model_name": "<slm-model>",
+        "url": "http://localhost:8001/v1/chat/completions",
+        "api_key": null,
+        "timeout": 120
+    },
+    "llm-qwen2.5-32b": {
+        "model_name": "<local-llm-model>",
+        "url": "http://localhost:8002/v1/chat/completions",
+        "api_key": null,
+        "timeout": 600
+    },
+    "llm-qwen3-8b": {
+        "model_name": "<local-llm-model>",
+        "url": "http://localhost:8002/v1/chat/completions",
+        "api_key": null,
+        "timeout": 120
+    },
+    "llm-deepseek-flash": {
+        "model_name": "<deepseek-model>",
+        "url": "https://api.deepseek.com/chat/completions",
+        "api_key": "<deepseek-api-key>",
+        "timeout": 600
+    }
+}

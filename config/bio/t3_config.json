@@ -1,0 +1,73 @@
+[
+    {
+        "oid": 3,
+        "op_type": "sem_join",
+        "op_args": {
+            "left_on": "abstract_1",
+            "right_on": "abstract_3",
+            "condition": "Compare the two abstracts and determine if the first one is more rigorous than the second one. Return True if it is, False otherwise.",
+            "left_sel": 0.1,
+            "right_sel": 0.1,
+            "left_in": 128,
+            "right_in": 128,
+            "out": 2,
+            "op_name": "t3_sem_join_3"
+        }
+    },
+    {
+        "oid": 4,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "fulltext_processed_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t3_sem_filter_4"
+        }
+    },
+    {
+        "oid": 5,
+        "op_type": "sem_proj",
+        "op_args": {
+            "key": "abstract_3",
+            "in": 128,
+            "out": 16,
+            "op_name": "t3_sem_proj_5"
+        }
+    },
+    {
+        "oid": 6,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "country_3",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t3_sem_filter_6"
+        }
+    },
+    {
+        "oid": 7,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_3",
+            "rows": [
+                0,
+                10
+            ],
+            "op_name": "t3_scan_7"
+        }
+    },
+    {
+        "oid": 8,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                0,
+                100
+            ],
+            "op_name": "t3_scan_8"
+        }
+    }
+]

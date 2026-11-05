@@ -1,0 +1,164 @@
+{
+  "nodes": {
+    "2": {
+      "oid": 2,
+      "op_type": "join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_join_2",
+        "left_on": "reasons_doc_id",
+        "right_on": "orders_doc_id"
+      },
+      "refs": {
+        "left": 5,
+        "right": 4
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_1",
+        "key": "reasons_text",
+        "new_col": "reasoning_kind",
+        "instr": "Return one label for the principal reasoning actually present: STATUTORY_INTERPRETATION, FACTUAL_ASSESSMENT, DISCRETIONARY_BALANCING, PROCEDURAL_RULE, or UNKNOWN. A citation alone is not interpretive reasoning. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 32,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 10
+      },
+      "enabled": true
+    },
+    "10": {
+      "oid": 10,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_10",
+        "key": "reasons_text",
+        "new_col": "reasoning_evidence",
+        "instr": "In 130-190 words extract the application or challenge, governing test, material facts, competing submissions, accepted findings, and express conclusion. Include two short supporting phrases and distinguish the present proceeding from earlier litigation. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 416,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_scan_3",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_filter_4",
+        "key": "review_relief_record",
+        "predicate": "The present order expressly varies, sets aside, quashes, or remits an identified earlier decision. Affirmance, dismissal of a challenge, an interim stay, and costs orders alone are insufficient. Use only the supplied text. Missing evidence means False. Distinguish the present decision from submissions, quotations, and prior decisions; do not infer the result from a case name.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 6
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_filter_5",
+        "key": "reasoning_kind",
+        "predicate": "The reasoning actually present is STATUTORY_INTERPRETATION or PROCEDURAL_RULE. A citation alone is not interpretive reasoning. Use only the supplied text. Do not attribute a submission or a quoted earlier order to the present deciding body. Do not infer omitted material.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_6",
+        "key": "orders_text",
+        "new_col": "review_relief_record",
+        "instr": "In 40-70 words identify any challenged decision and whether it is affirmed, varied, set aside, remitted, or temporarily stayed. Preserve an express refusal or dismissal. If the underlying decision is unidentified, say UNKNOWN. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 160,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_sem_proj_7",
+        "key": "orders_text",
+        "new_col": "disposition_audit",
+        "instr": "In 90-140 words identify each express present disposition, the party or decision affected, ancillary costs, and any temporal conditions. Explain whether relief is interim or final only if stated. Do not reconstruct orders incorporated only by reference. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 320,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t6_scan_8",
+        "table_dir": "data/legal/orders.csv",
+        "table_name": "orders"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

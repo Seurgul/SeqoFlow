@@ -1,0 +1,163 @@
+{
+  "nodes": {
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_filter_3",
+        "key": "relief_requirements",
+        "predicate": "The record identifies the relief considered.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_proj_4",
+        "key": "reasons_text",
+        "new_col": "relief_requirements",
+        "instr": "In 100-150 words record the procedural setting, specific relief at issue, governing considerations, concrete prejudice or risk, competing interests, and express decision if available. Quote two short phrases. Do not propose a remedy not sought or discussed. Use only the supplied text; mark unstated facts UNKNOWN. Preserve whether a statement is a submission, prior decision, or present finding. Do not infer omitted material or current legal validity.",
+        "llm_args": {
+          "max_tokens": 336,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_filter_5",
+        "key": "reasons_text",
+        "predicate": "The subject of the text is a male.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_filter_8",
+        "key": "reasons_text",
+        "predicate": "The text identifies more than 1 bullet point of reasoning.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_join_1",
+        "left_on": "orders_text",
+        "right_on": "reasons_text",
+        "condition": "Document 1 is an order; Document 2 describes relief considered in a dispute. Match when the order and the relief are both from cases involving individuals.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "left": 2,
+        "right": 6
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_scan_2",
+        "table_dir": "data/legal/orders.csv",
+        "table_name": "orders"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_filter_6",
+        "key": "core",
+        "predicate": "core.str.contains('CORE STMT:', case=False, na=False, regex=True)"
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_sem_proj_7",
+        "key": "reasons_text",
+        "new_col": "core",
+        "instr": "In 50 words, identify the core statements in this excerpt, starting with 'CORE STMT: ' ",
+        "llm_args": {
+          "max_tokens": 64,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t7_scan_9",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

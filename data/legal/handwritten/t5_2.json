@@ -1,0 +1,113 @@
+{
+  "nodes": {
+    "6": {
+      "oid": 6,
+      "op_type": "sem_sort",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t5_sem_sort_6",
+        "order_by": "reasons_first",
+        "desc": true,
+        "instr": "Select the excerpt that more clearly explains how an identified statutory test applies to the facts of a challenge: explicit test and fact-to-test reasoning first, explained disposition second, treatment of competing submissions third. Rank evidence actually present in the headnote or introductory text, not case importance, length, number of citations, or whether the challenger won. Do not infer reasons or conclusions omitted from the excerpt.",
+        "llm_args": {
+          "max_tokens": 8,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t5_sem_filter_1",
+        "key": "reasons_text",
+        "predicate": "The deciding body discusses an identified statutory test or provision, or lists legislation. ",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 2
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t5_sem_filter_2",
+        "key": "reasons_text",
+        "predicate": "The text identifies a disputed legal or procedural question and explains why it matters to the relief sought. A list of citations or an unexplained assertion that the decision was wrong is insufficient. Use only the supplied text. Missing evidence means False. Distinguish the present decision from submissions, quotations, and prior decisions; do not infer the result from a case name.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 3
+      },
+      "enabled": true
+    },
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t5_sem_filter_3",
+        "key": "reasons_text",
+        "predicate": "The text identifies an adversarial court or tribunal proceeding with opposing parties. Exclude instrument titles, original proceedings with no review, and a reference only to an appeal in another case. Use only the supplied excerpt; missing evidence means False.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t5_sem_filter_4",
+        "key": "reasons_text",
+        "predicate": "The text identifie a court, tribunal, or administrative decision and states the decision or ruling.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        }
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "op_name": "t5_scan_5",
+        "table_dir": "data/legal/reasons.csv",
+        "table_name": "reasons"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

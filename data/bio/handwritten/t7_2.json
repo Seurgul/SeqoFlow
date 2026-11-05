@@ -1,0 +1,163 @@
+{
+  "nodes": {
+    "3": {
+      "oid": 3,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "desc",
+        "predicate": "The description of keywords indicates that these keywords are related to cardiovascular diseases.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t7_sem_filter_3"
+      },
+      "refs": {
+        "child": 4
+      },
+      "enabled": true
+    },
+    "4": {
+      "oid": 4,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "keywords_2",
+        "new_col": "desc",
+        "instr": "Generate a brief description for each of the keywords.",
+        "llm_args": {
+          "max_tokens": 1024,
+          "temperature": 0.0
+        },
+        "op_name": "t7_sem_proj_4"
+      },
+      "refs": {
+        "child": 5
+      },
+      "enabled": true
+    },
+    "5": {
+      "oid": 5,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "journal_2",
+        "predicate": "The journal is a regional journal.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t7_sem_filter_5"
+      },
+      "refs": {
+        "child": 8
+      },
+      "enabled": true
+    },
+    "8": {
+      "oid": 8,
+      "op_type": "sem_filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "fulltext_processed_2",
+        "predicate": "This document is a medical paper.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t7_sem_filter_8"
+      },
+      "refs": {
+        "child": 1
+      },
+      "enabled": true
+    },
+    "1": {
+      "oid": 1,
+      "op_type": "sem_join",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "left_on": "fulltext_processed_1",
+        "right_on": "keywords_2",
+        "condition": "The first input is the full text of a medical paper, and the second input is a list of keywords. Determine if the paper is relevant to the keywords.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t7_sem_join_1"
+      },
+      "refs": {
+        "left": 2,
+        "right": 6
+      },
+      "enabled": true
+    },
+    "2": {
+      "oid": 2,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_1.csv",
+        "table_name": "bio_1",
+        "op_name": "t7_scan_2"
+      },
+      "refs": {},
+      "enabled": true
+    },
+    "6": {
+      "oid": 6,
+      "op_type": "filter",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "is_asian",
+        "predicate": "is_asian == 'Yes'",
+        "op_name": "t7_filter_6"
+      },
+      "refs": {
+        "child": 7
+      },
+      "enabled": true
+    },
+    "7": {
+      "oid": 7,
+      "op_type": "sem_proj",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "key": "authors_2",
+        "new_col": "is_asian",
+        "instr": "Determine if the first author is from Asian countries. Return 'Yes' if it is from Asian countries, 'No' otherwise.",
+        "llm_args": {
+          "max_tokens": 2,
+          "temperature": 0.0
+        },
+        "op_name": "t7_sem_proj_7"
+      },
+      "refs": {
+        "child": 9
+      },
+      "enabled": true
+    },
+    "9": {
+      "oid": 9,
+      "op_type": "scan",
+      "requires": [],
+      "yields": [],
+      "params": {
+        "table_dir": "data/bio/bio_2.csv",
+        "table_name": "bio_2",
+        "op_name": "t7_scan_9"
+      },
+      "refs": {},
+      "enabled": true
+    }
+  }
+}

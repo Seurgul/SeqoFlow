@@ -1,0 +1,109 @@
+{
+    "nodes": {
+        "10": {
+            "oid": 10,
+            "op_type": "sem_proj",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "keywords_2",
+                "new_col": "desc",
+                "instr": "Generate a brief description for each of the keywords.",
+                "llm_args": {
+                    "max_tokens": 1024,
+                    "temperature": 0.0
+                },
+                "op_name": "t4_sem_proj_10"
+            },
+            "refs": {
+                "child": 1
+            },
+            "enabled": true
+        },
+        "1": {
+            "oid": 1,
+            "op_type": "sem_join",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "left_on": "fulltext_processed_1",
+                "right_on": "keywords_2",
+                "condition": "The first input is the full text of a medical paper, and the second input is a list of keywords. Determine if the paper is relevant to the keywords. Return True if relevant, False otherwise.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t4_sem_join_1"
+            },
+            "refs": {
+                "left": 2,
+                "right": 3
+            },
+            "enabled": true
+        },
+        "2": {
+            "oid": 2,
+            "op_type": "sem_filter",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "fulltext_processed_1",
+                "predicate": "This paper is reporting a clinical case with one or more patients.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t4_sem_filter_2"
+            },
+            "refs": {
+                "child": 6
+            },
+            "enabled": true
+        },
+        "3": {
+            "oid": 3,
+            "op_type": "sem_filter",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "key": "fulltext_processed_2",
+                "predicate": "This paper is reporting a clinical case with one or more patients.",
+                "llm_args": {
+                    "max_tokens": 2,
+                    "temperature": 0.0
+                },
+                "op_name": "t4_sem_filter_3"
+            },
+            "refs": {
+                "child": 7
+            },
+            "enabled": true
+        },
+        "6": {
+            "oid": 6,
+            "op_type": "scan",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "table_dir": "data/bio/bio_1.csv",
+                "table_name": "bio_1",
+                "op_name": "t4_scan_6"
+            },
+            "refs": {},
+            "enabled": true
+        },
+        "7": {
+            "oid": 7,
+            "op_type": "scan",
+            "requires": [],
+            "yields": [],
+            "params": {
+                "table_dir": "data/bio/bio_2.csv",
+                "table_name": "bio_2",
+                "op_name": "t4_scan_7"
+            },
+            "refs": {},
+            "enabled": true
+        }
+    }
+}

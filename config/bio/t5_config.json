@@ -1,0 +1,57 @@
+[
+    {
+        "oid": 1,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "authors_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t5_sem_filter_1"
+        }
+    },
+    {
+        "oid": 2,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "fulltext_processed_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t5_sem_filter_2"
+        }
+    },
+    {
+        "oid": 3,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "abstract_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t5_sem_filter_3"
+        }
+    },
+    {
+        "oid": 4,
+        "op_type": "sem_filter",
+        "op_args": {
+            "key": "country_1",
+            "sel": 0.1,
+            "in": 128,
+            "out": 2,
+            "op_name": "t5_sem_filter_4"
+        }
+    },
+    {
+        "oid": 5,
+        "op_type": "scan",
+        "op_args": {
+            "table_name": "bio_1",
+            "rows": [
+                0, 1000
+            ],
+            "op_name": "t5_scan_5"
+        }
+    }
+]
